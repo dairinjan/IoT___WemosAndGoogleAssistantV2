@@ -1,0 +1,69 @@
+#define BLYNK_PRINT Serial
+
+#include <ESP8266WiFi.h>
+
+#include <BlynkSimpleEsp8266.h>
+
+// You should get Auth Token in the Blynk App.
+
+// Go to the Project Settings (nut icon).
+
+char auth[] = "ySbjQ_NdxgczlnT04N_4UzHvnnP7msxt";
+
+// Your WiFi credentials.
+// Set password to "" for open networks.
+char ssid[] = "PLDTHOMEFIBR04250";
+char pass[] = "PLDTWIFIs3tpk";
+
+int LEDgreen = D8;
+int LEDred   = D7;
+int LEDblue  = D6;
+
+void setup()
+{
+  // Debug console
+  Serial.begin(9600);
+  pinMode(LEDgreen, OUTPUT); //Set the LED (D8) as an output
+  pinMode(LEDred, OUTPUT); //Set the LED (D7) as an output
+  pinMode(LEDblue, OUTPUT); //Set the LED (D6) as an output
+  Blynk.begin(auth, ssid, pass);
+
+}
+
+void loop()
+{
+  Blynk.run();
+
+}
+
+// This function will be called every time button Widget
+// in Blynk app writes values to the Virtual Pin V3
+BLYNK_WRITE(V0) {
+  String blynkValue = param.asStr(); // Assigning incoming value from pin V3 to a variable
+  Serial.println(blynkValue);
+  if (blynkValue == "green")
+  {
+    digitalWrite(LEDgreen, HIGH); // Turn LED on.
+    digitalWrite(LEDred, LOW); // Turn LED on.
+    digitalWrite(LEDblue, LOW); // Turn LED on.
+  }
+  else if (blynkValue == "blue")
+  {
+    digitalWrite(LEDblue, HIGH); // Turn LED on.
+    digitalWrite(LEDred, LOW); // Turn LED on.
+    digitalWrite(LEDgreen, LOW); // Turn LED on.
+  }
+  else if (blynkValue == "red")
+  {
+    digitalWrite(LEDred, HIGH); // Turn LED on.
+    digitalWrite(LEDgreen, LOW); // Turn LED on.
+    digitalWrite(LEDblue, LOW); // Turn LED on.
+  }
+  else
+  {
+    digitalWrite(LEDred, LOW); // Turn LED on.
+    digitalWrite(LEDgreen, LOW); // Turn LED on.
+    digitalWrite(LEDblue, LOW); // Turn LED on.
+
+  }
+}
